@@ -1,73 +1,59 @@
-# Welcome to your Lovable project
+# Corgis: Short Legs, Big Hearts 🐕
 
-## Project info
+An interactive single-page website celebrating everything corgi! Built with React, TypeScript, and lots of love for these adorable short-legged companions.
 
-**URL**: https://lovable.dev/projects/0c5c74f6-8c69-4d1e-adeb-788cbb665a93
+## Features
 
-## How can I edit this code?
+- **Comprehensive GA4 Tracking**: Every meaningful interaction sends custom events to Google Analytics 4
+- **Interactive Elements**: Like buttons, bark sounds, treat counter, quiz, name generator, and more
+- **Debug Panel**: Real-time event tracking display (auto-enabled with `?debug=1`)
+- **Responsive Design**: Beautiful on all devices with corgi-themed design system
+- **Keyboard Shortcuts**: Press `B` to bark, `T` for treats, `G` to generate names
+- **Idle Detection**: Gentle nudges if you've been inactive for 20 seconds
 
-There are several ways of editing your application.
+## GA4 Setup
 
-**Use Lovable**
+1. Replace `G-XXXXXXX` in `index.html` with your actual Google Analytics 4 tracking ID
+2. All events use the `corgi_*` namespace with descriptive parameters
+3. Enable debug mode by adding `?debug=1` to the URL to see live event tracking
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/0c5c74f6-8c69-4d1e-adeb-788cbb665a93) and start prompting.
+## Event Tracking
 
-Changes made via Lovable will be committed automatically to this repo.
+The site tracks numerous interactions including:
+- Button clicks (`corgi_cta_click`, `corgi_bark_click`, etc.)
+- Accordion toggles (`corgi_accordion_toggle`)
+- Gallery interactions (`corgi_gallery_filter`, `corgi_modal_open`)
+- Quiz completion (`corgi_quiz_complete`)
+- Scroll depth milestones (`scroll_depth`)
+- Keyboard shortcuts (`corgi_keyboard_shortcut`)
+- And many more!
 
-**Use your preferred IDE**
+## Quick Start
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+```bash
+npm install
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+Visit `http://localhost:8080` and add `?debug=1` to see GA events in real-time!
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## Tech Stack
 
-**Use GitHub Codespaces**
+- **React 18** with TypeScript
+- **Tailwind CSS** with custom corgi-themed design system
+- **Vite** for fast development
+- **Shadcn/ui** components
+- **Google Analytics 4** with gtag.js
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## Interactive Features
 
-## What technologies are used for this project?
+- **Hero Section**: CTA buttons with smooth scrolling
+- **Pros/Cons**: Like buttons and accordion sections  
+- **Gallery**: Filtering and lightbox modal with carousel
+- **Quiz**: Multi-step quiz with social sharing
+- **Name Generator**: Random corgi name creation
+- **Treat Counter**: Milestone celebrations with confetti
+- **Newsletter**: Fake signup with success states
+- **Keyboard Shortcuts**: Hidden productivity features
 
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/0c5c74f6-8c69-4d1e-adeb-788cbb665a93) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+Built with ❤️ for corgi enthusiasts everywhere!

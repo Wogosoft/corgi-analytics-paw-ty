@@ -57,6 +57,14 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        corgi: {
+          orange: "hsl(var(--corgi-orange))",
+          cream: "hsl(var(--corgi-cream))",
+          brown: "hsl(var(--corgi-brown))",
+        },
+        treat: {
+          gold: "hsl(var(--treat-gold))",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -80,10 +88,43 @@ export default {
             height: "0",
           },
         },
+        wiggle: {
+          "0%, 100%": { transform: "rotate(0deg)" },
+          "25%": { transform: "rotate(-3deg)" },
+          "75%": { transform: "rotate(3deg)" },
+        },
+        bounce: {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-10px)" },
+        },
+        "treat-bounce": {
+          "0%": { transform: "scale(1)" },
+          "50%": { transform: "scale(1.2) rotate(5deg)" },
+          "100%": { transform: "scale(1)" },
+        },
+        "fade-in-up": {
+          from: {
+            opacity: "0",
+            transform: "translateY(20px)",
+          },
+          to: {
+            opacity: "1",
+            transform: "translateY(0)",
+          },
+        },
+        pulse: {
+          "0%, 100%": { opacity: "1" },
+          "50%": { opacity: "0.5" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        wiggle: "wiggle 0.6s ease-in-out",
+        bounce: "bounce 0.5s ease-in-out",
+        "treat-bounce": "treat-bounce 0.4s ease-out",
+        "fade-in-up": "fade-in-up 0.6s ease-out",
+        pulse: "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
       },
     },
   },
