@@ -4,8 +4,8 @@ import path from "path";
 import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
-export default defineConfig(({ mode }) => ({
-  base: process.env.NODE_ENV === 'production' || mode === 'production' ? '/corgi-analytics-paw-ty/' : '/',
+export default defineConfig(({ mode, command }) => ({
+  base: command === 'build' ? '/corgi-analytics-paw-ty/' : '/',
   server: {
     host: "::",
     port: 8080,
@@ -13,6 +13,16 @@ export default defineConfig(({ mode }) => ({
   plugins: [react(), mode === "development" && componentTagger()].filter(
     Boolean,
   ),
+  build: {
+    outDir: 'dist',
+    assetsDir: 'assets',
+    sourcemap: false,
+    rollupOptions: {
+      output: {
+        manualChunks: undefined,
+      },
+    },
+  },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),

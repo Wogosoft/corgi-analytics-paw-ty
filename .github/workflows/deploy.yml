@@ -29,10 +29,11 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build
+      - name: Build for production
         run: npm run build
         env:
           NODE_ENV: production
+          VITE_BASE_PATH: /corgi-analytics-paw-ty/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
