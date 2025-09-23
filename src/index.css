@@ -9,25 +9,25 @@ All colors MUST be HSL.
 @layer base {
   :root {
     /* Corgi Color Palette */
-    --background: 45 50% 98%;          /* Warm cream background */
-    --foreground: 25 25% 15%;          /* Dark charcoal text */
+    --background: 45 50% 98%; /* Warm cream background */
+    --foreground: 25 25% 15%; /* Dark charcoal text */
 
-    --card: 45 40% 96%;                /* Light cream cards */
+    --card: 45 40% 96%; /* Light cream cards */
     --card-foreground: 25 25% 15%;
 
     --popover: 45 40% 96%;
     --popover-foreground: 25 25% 15%;
 
-    --primary: 25 90% 55%;             /* Corgi orange */
+    --primary: 25 90% 55%; /* Corgi orange */
     --primary-foreground: 45 50% 98%;
 
-    --secondary: 195 75% 75%;          /* Sky blue accent */
+    --secondary: 195 75% 75%; /* Sky blue accent */
     --secondary-foreground: 25 25% 15%;
 
-    --muted: 45 30% 88%;               /* Soft beige */
+    --muted: 45 30% 88%; /* Soft beige */
     --muted-foreground: 25 15% 45%;
 
-    --accent: 195 75% 75%;             /* Sky blue */
+    --accent: 195 75% 75%; /* Sky blue */
     --accent-foreground: 25 25% 15%;
 
     --destructive: 0 84% 60%;
@@ -38,16 +38,28 @@ All colors MUST be HSL.
     --ring: 25 90% 55%;
 
     /* Corgi-specific colors */
-    --corgi-orange: 25 90% 55%;        /* Main corgi color */
-    --corgi-cream: 45 50% 92%;         /* Light corgi fur */
-    --corgi-brown: 30 40% 35%;         /* Dark corgi markings */
-    --treat-gold: 45 85% 65%;          /* Golden treat color */
-    
+    --corgi-orange: 25 90% 55%; /* Main corgi color */
+    --corgi-cream: 45 50% 92%; /* Light corgi fur */
+    --corgi-brown: 30 40% 35%; /* Dark corgi markings */
+    --treat-gold: 45 85% 65%; /* Golden treat color */
+
     /* Fun gradients */
-    --gradient-corgi: linear-gradient(135deg, hsl(var(--corgi-orange)), hsl(var(--treat-gold)));
-    --gradient-sky: linear-gradient(180deg, hsl(var(--secondary)), hsl(195 60% 85%));
-    --gradient-cream: linear-gradient(135deg, hsl(var(--background)), hsl(var(--corgi-cream)));
-    
+    --gradient-corgi: linear-gradient(
+      135deg,
+      hsl(var(--corgi-orange)),
+      hsl(var(--treat-gold))
+    );
+    --gradient-sky: linear-gradient(
+      180deg,
+      hsl(var(--secondary)),
+      hsl(195 60% 85%)
+    );
+    --gradient-cream: linear-gradient(
+      135deg,
+      hsl(var(--background)),
+      hsl(var(--corgi-cream))
+    );
+
     /* Interactive shadows */
     --shadow-corgi: 0 4px 20px hsl(var(--corgi-orange) / 0.25);
     --shadow-treat: 0 2px 10px hsl(var(--treat-gold) / 0.3);
@@ -107,11 +119,23 @@ All colors MUST be HSL.
     --corgi-cream: 45 30% 25%;
     --corgi-brown: 30 25% 15%;
     --treat-gold: 45 75% 55%;
-    
-    --gradient-corgi: linear-gradient(135deg, hsl(var(--corgi-orange)), hsl(var(--treat-gold)));
-    --gradient-sky: linear-gradient(180deg, hsl(var(--secondary)), hsl(195 40% 25%));
-    --gradient-cream: linear-gradient(135deg, hsl(var(--background)), hsl(var(--corgi-cream)));
-    
+
+    --gradient-corgi: linear-gradient(
+      135deg,
+      hsl(var(--corgi-orange)),
+      hsl(var(--treat-gold))
+    );
+    --gradient-sky: linear-gradient(
+      180deg,
+      hsl(var(--secondary)),
+      hsl(195 40% 25%)
+    );
+    --gradient-cream: linear-gradient(
+      135deg,
+      hsl(var(--background)),
+      hsl(var(--corgi-cream))
+    );
+
     --shadow-corgi: 0 4px 20px hsl(var(--corgi-orange) / 0.4);
     --shadow-treat: 0 2px 10px hsl(var(--treat-gold) / 0.4);
     --shadow-soft: 0 2px 8px hsl(0 0% 0% / 0.3);
@@ -181,15 +205,28 @@ All colors MUST be HSL.
 
   /* Corgi-themed animations */
   @keyframes wiggle {
-    0%, 100% { transform: rotate(0deg); }
-    25% { transform: rotate(-3deg); }
-    75% { transform: rotate(3deg); }
+    0%,
+    100% {
+      transform: rotate(0deg);
+    }
+    25% {
+      transform: rotate(-3deg);
+    }
+    75% {
+      transform: rotate(3deg);
+    }
   }
 
   @keyframes treatBounce {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.2) rotate(5deg); }
-    100% { transform: scale(1); }
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.2) rotate(5deg);
+    }
+    100% {
+      transform: scale(1);
+    }
   }
 
   @keyframes fadeInUp {

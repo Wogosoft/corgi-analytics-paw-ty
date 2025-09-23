@@ -1,20 +1,20 @@
-import { Button } from '@/components/ui/button';
-import { gaEvent } from '@/lib/analytics';
-import { ArrowUp, Heart, Github, Twitter, Mail } from 'lucide-react';
+import { Button } from "@/components/ui/button";
+import { gaEvent } from "@/lib/analytics";
+import { ArrowUp, Heart, Github, Twitter, Mail } from "lucide-react";
 
 export function Footer() {
   const handleBackToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    
-    gaEvent('corgi_back_to_top', {
-      section: 'footer',
+    window.scrollTo({ top: 0, behavior: "smooth" });
+
+    gaEvent("corgi_back_to_top", {
+      section: "footer",
       timestamp: Date.now(),
     });
   };
 
   const handleNavClick = (label: string, href?: string) => {
-    gaEvent('corgi_nav_click', {
-      section: 'footer',
+    gaEvent("corgi_nav_click", {
+      section: "footer",
       label,
       href,
       timestamp: Date.now(),
@@ -37,7 +37,7 @@ export function Footer() {
             Back to Top
           </Button>
         </div>
-        
+
         <div className="max-w-4xl mx-auto">
           {/* Main footer content */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
@@ -48,19 +48,21 @@ export function Footer() {
                 Corgi Central
               </h3>
               <p className="text-muted-foreground leading-relaxed">
-                Your one-stop destination for all things corgi. From care tips 
+                Your one-stop destination for all things corgi. From care tips
                 to adorable photos, we celebrate these short-legged royals!
               </p>
             </div>
-            
+
             {/* Quick links */}
             <div className="text-center space-y-4">
               <h4 className="font-semibold">Quick Links</h4>
               <div className="space-y-2">
                 <button
                   onClick={() => {
-                    handleNavClick('why_have_corgi');
-                    document.getElementById('why-have-corgi')?.scrollIntoView({ behavior: 'smooth' });
+                    handleNavClick("why_have_corgi");
+                    document
+                      .getElementById("why-have-corgi")
+                      ?.scrollIntoView({ behavior: "smooth" });
                   }}
                   className="block w-full text-muted-foreground hover:text-primary transition-colors"
                 >
@@ -68,8 +70,10 @@ export function Footer() {
                 </button>
                 <button
                   onClick={() => {
-                    handleNavClick('funny_things');
-                    document.getElementById('funny-things')?.scrollIntoView({ behavior: 'smooth' });
+                    handleNavClick("funny_things");
+                    document
+                      .getElementById("funny-things")
+                      ?.scrollIntoView({ behavior: "smooth" });
                   }}
                   className="block w-full text-muted-foreground hover:text-primary transition-colors"
                 >
@@ -77,8 +81,10 @@ export function Footer() {
                 </button>
                 <button
                   onClick={() => {
-                    handleNavClick('quiz');
-                    document.querySelector('[id*="quiz"]')?.scrollIntoView({ behavior: 'smooth' });
+                    handleNavClick("quiz");
+                    document
+                      .querySelector('[id*="quiz"]')
+                      ?.scrollIntoView({ behavior: "smooth" });
                   }}
                   className="block w-full text-muted-foreground hover:text-primary transition-colors"
                 >
@@ -86,7 +92,7 @@ export function Footer() {
                 </button>
               </div>
             </div>
-            
+
             {/* Connect section */}
             <div className="text-center md:text-right space-y-4">
               <h4 className="font-semibold">Connect</h4>
@@ -94,7 +100,7 @@ export function Footer() {
                 <Button
                   variant="ghost"
                   size="icon"
-                  onClick={() => handleNavClick('github', 'https://github.com')}
+                  onClick={() => handleNavClick("github", "https://github.com")}
                   className="hover-bounce"
                 >
                   <Github className="w-4 h-4" />
@@ -102,7 +108,9 @@ export function Footer() {
                 <Button
                   variant="ghost"
                   size="icon"
-                  onClick={() => handleNavClick('twitter', 'https://twitter.com')}
+                  onClick={() =>
+                    handleNavClick("twitter", "https://twitter.com")
+                  }
                   className="hover-bounce"
                 >
                   <Twitter className="w-4 h-4" />
@@ -110,7 +118,9 @@ export function Footer() {
                 <Button
                   variant="ghost"
                   size="icon"
-                  onClick={() => handleNavClick('email', 'mailto:hello@corgis.dev')}
+                  onClick={() =>
+                    handleNavClick("email", "mailto:hello@corgis.dev")
+                  }
                   className="hover-bounce"
                 >
                   <Mail className="w-4 h-4" />
@@ -118,7 +128,7 @@ export function Footer() {
               </div>
             </div>
           </div>
-          
+
           {/* Credits and copyright */}
           <div className="border-t border-border pt-8 text-center space-y-4">
             <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
@@ -127,37 +137,41 @@ export function Footer() {
                 <Heart className="w-4 h-4 text-red-500 fill-current" />
                 <span>for corgi lovers everywhere</span>
               </div>
-              
+
               <button
-                onClick={() => handleNavClick('credits')}
+                onClick={() => handleNavClick("credits")}
                 className="text-muted-foreground hover:text-primary transition-colors text-sm"
               >
                 Credits & Acknowledgments
               </button>
             </div>
-            
+
             <div className="text-sm text-muted-foreground">
               <p>
-                © 2024 Corgi Central. This is a demo website showcasing corgi awesomeness.
+                © 2024 Corgi Central. This is a demo website showcasing corgi
+                awesomeness.
               </p>
               <p className="mt-1">
-                Replace <code className="bg-muted px-1 rounded text-xs">G-XXXXXXX</code> in 
-                the head with your actual GA4 tracking ID.
+                Replace{" "}
+                <code className="bg-muted px-1 rounded text-xs">G-XXXXXXX</code>{" "}
+                in the head with your actual GA4 tracking ID.
               </p>
             </div>
           </div>
-          
+
           {/* Fun easter egg */}
           <div className="text-center mt-8">
             <button
               onClick={() => {
-                gaEvent('corgi_easter_egg', {
-                  section: 'footer',
-                  message: 'You found the hidden corgi!',
+                gaEvent("corgi_easter_egg", {
+                  section: "footer",
+                  message: "You found the hidden corgi!",
                 });
-                
+
                 // Show a fun message
-                alert('🐕 Woof! You found the hidden corgi! Have a great day! 🐕');
+                alert(
+                  "🐕 Woof! You found the hidden corgi! Have a great day! 🐕",
+                );
               }}
               className="text-xs text-muted-foreground/50 hover:text-primary transition-colors"
             >

@@ -1,14 +1,14 @@
-import { useState, useEffect } from 'react';
-import { isDebugMode } from '@/lib/analytics';
-import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { ChevronDown, ChevronUp, Bug, Trash2 } from 'lucide-react';
+import { useState, useEffect } from "react";
+import { isDebugMode } from "@/lib/analytics";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { ChevronDown, ChevronUp, Bug, Trash2 } from "lucide-react";
 
 interface GAEvent {
   timestamp: number;
   name: string;
-  params: Record<string, any>;
+  params: Record<string, string | number | boolean | null | undefined>;
 }
 
 export function DebugPanel() {
@@ -24,13 +24,13 @@ export function DebugPanel() {
     // Intercept console.log calls to capture GA events
     const originalLog = console.log;
     console.log = (...args) => {
-      if (args[0] === '[GA]' && args[1] && args[2]) {
+      if (args[0] === "[GA]" && args[1] && args[2]) {
         const event: GAEvent = {
           timestamp: Date.now(),
           name: args[1],
           params: args[2] || {},
         };
-        setEvents(prev => [event, ...prev].slice(0, 50)); // Keep last 50 events
+        setEvents((prev) => [event, ...prev].slice(0, 50)); // Keep last 50 events
       }
       originalLog(...args);
     };
@@ -49,10 +49,10 @@ export function DebugPanel() {
   };
 
   const getEventTypeColor = (name: string) => {
-    if (name.startsWith('corgi_')) return 'bg-primary';
-    if (name.startsWith('scroll_')) return 'bg-secondary';
-    if (name.startsWith('video_')) return 'bg-accent';
-    return 'bg-muted';
+    if (name.startsWith("corgi_")) return "bg-primary";
+    if (name.startsWith("scroll_")) return "bg-secondary";
+    if (name.startsWith("video_")) return "bg-accent";
+    return "bg-muted";
   };
 
   return (
@@ -75,13 +75,11 @@ export function DebugPanel() {
             <ChevronDown className="w-4 h-4" />
           )}
         </Button>
-        
+
         {isOpen && (
           <div className="border-t p-3">
             <div className="flex items-center justify-between mb-3">
-              <p className="text-xs text-muted-foreground">
-                Live event stream
-              </p>
+              <p className="text-xs text-muted-foreground">Live event stream</p>
               <Button
                 variant="ghost"
                 size="sm"
@@ -91,7 +89,7 @@ export function DebugPanel() {
                 <Trash2 className="w-3 h-3" />
               </Button>
             </div>
-            
+
             <div className="space-y-2 max-h-96 overflow-y-auto">
               {events.length === 0 ? (
                 <p className="text-xs text-muted-foreground text-center py-4">
@@ -104,7 +102,7 @@ export function DebugPanel() {
                     className="text-xs space-y-1 p-2 bg-muted/50 rounded"
                   >
                     <div className="flex items-center gap-2">
-                      <Badge 
+                      <Badge
                         className={`text-xs px-1 py-0 ${getEventTypeColor(event.name)} text-white`}
                       >
                         {event.name}
@@ -113,17 +111,18 @@ export function DebugPanel() {
                         {formatTimestamp(event.timestamp)}
                       </span>
                     </div>
-                    
+
                     {Object.keys(event.params).length > 0 && (
                       <div className="pl-2 space-y-1">
                         {Object.entries(event.params).map(([key, value]) => (
                           <div key={key} className="flex gap-1">
-                            <span className="text-muted-foreground">{key}:</span>
+                            <span className="text-muted-foreground">
+                              {key}:
+                            </span>
                             <span className="font-mono">
-                              {typeof value === 'object' 
-                                ? JSON.stringify(value) 
-                                : String(value)
-                              }
+                              {typeof value === "object"
+                                ? JSON.stringify(value)
+                                : String(value)}
                             </span>
                           </div>
                         ))}

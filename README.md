@@ -20,6 +20,7 @@ An interactive single-page website celebrating everything corgi! Built with Reac
 ## Event Tracking
 
 The site tracks numerous interactions including:
+
 - Button clicks (`corgi_cta_click`, `corgi_bark_click`, etc.)
 - Accordion toggles (`corgi_accordion_toggle`)
 - Gallery interactions (`corgi_gallery_filter`, `corgi_modal_open`)
@@ -48,7 +49,7 @@ Visit `http://localhost:8080` and add `?debug=1` to see GA events in real-time!
 ## Interactive Features
 
 - **Hero Section**: CTA buttons with smooth scrolling
-- **Pros/Cons**: Like buttons and accordion sections  
+- **Pros/Cons**: Like buttons and accordion sections
 - **Gallery**: Filtering and lightbox modal with carousel
 - **Quiz**: Multi-step quiz with social sharing
 - **Name Generator**: Random corgi name creation
