@@ -6,20 +6,23 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
-import { gaEvent } from "./lib/analytics";
+import { trackPageView, trackEngagementTime, trackPerformance } from "./lib/analytics";
 
 const queryClient = new QueryClient();
 
-// Component to track page views
+// Component to track page views and analytics
 const PageTracker = () => {
   const location = useLocation();
 
   useEffect(() => {
-    gaEvent("page_view", {
-      page_path: location.pathname + location.search,
-      page_title: document.title,
-    });
+    trackPageView(location.pathname + location.search, document.title);
   }, [location]);
+
+  // Initialize tracking once when component mounts
+  useEffect(() => {
+    trackEngagementTime();
+    trackPerformance();
+  }, []);
 
   return null;
 };

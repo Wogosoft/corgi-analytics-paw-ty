@@ -1,5 +1,6 @@
 // Google Analytics 4 helper for corgi website
 // Tracks user interactions with custom corgi-themed events
+// GA4 Measurement ID: G-TJ4QFGLZJ6
 
 type GtagArgs = [
   type: string,
@@ -137,4 +138,73 @@ export function initScrollTracking(): () => void {
  */
 export function isDebugMode(): boolean {
   return new URLSearchParams(window.location.search).get("debug") === "1";
+}
+
+/**
+ * Track user engagement time
+ */
+export function trackEngagementTime(): void {
+  let startTime = Date.now();
+  let lastActiveTime = startTime;
+  
+  const trackEngagement = () => {
+    const now = Date.now();
+    const totalTime = Math.round((now - startTime) / 1000);
+    const activeTime = Math.round((lastActiveTime - startTime) / 1000);
+    
+    gaEvent('engagement_time', {
+      total_time_seconds: totalTime,
+      active_time_seconds: activeTime,
+    });
+  };
+
+  const resetActiveTime = () => {
+    lastActiveTime = Date.now();
+  };
+
+  // Track user activity
+  ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart'].forEach(event => {
+    document.addEventListener(event, resetActiveTime, { passive: true });
+  });
+
+  // Track engagement every 30 seconds
+  setInterval(trackEngagement, 30000);
+  
+  // Track final engagement on page unload
+  window.addEventListener('beforeunload', trackEngagement);
+}
+
+/**
+ * Track performance metrics
+ */
+export function trackPerformance(): void {
+  if (typeof window !== 'undefined' && 'performance' in window) {
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        const perfData = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming;
+        
+        if (perfData) {
+          gaEvent('page_performance', {
+            load_time: Math.round(perfData.loadEventEnd - perfData.navigationStart),
+            dom_content_loaded: Math.round(perfData.domContentLoadedEventEnd - perfData.navigationStart),
+            first_paint: Math.round(perfData.responseEnd - perfData.navigationStart),
+          });
+        }
+      }, 1000);
+    });
+  }
+}
+
+/**
+ * Enhanced page view tracking with additional context
+ */
+export function trackPageView(path: string, title?: string): void {
+  gaEvent('page_view', {
+    page_path: path,
+    page_title: title || document.title,
+    user_agent: navigator.userAgent,
+    screen_resolution: `${screen.width}x${screen.height}`,
+    viewport_size: `${window.innerWidth}x${window.innerHeight}`,
+    timestamp: Date.now(),
+  });
 }
