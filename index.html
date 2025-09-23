@@ -32,7 +32,14 @@
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
 
-      gtag('config', 'G-TJ4QFGLZJ6');
+      gtag('config', 'G-TJ4QFGLZJ6', {
+        'cookie_domain': 'auto',
+        'cookie_flags': 'SameSite=None;Secure',
+        'send_page_view': false,
+        'anonymize_ip': true,
+        'allow_google_signals': true,
+        'allow_ad_personalization_signals': true
+      });
     </script>
 
     <meta property="og:title" content="0c5c74f6-8c69-4d1e-adeb-788cbb665a93" />
