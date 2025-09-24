@@ -6,7 +6,7 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
-import { trackPageView, trackEngagementTime, trackPerformance, testAnalytics } from "./lib/analytics";
+import { trackPageView, trackEngagementTime, trackPerformance } from "./lib/analytics";
 
 const queryClient = new QueryClient();
 
@@ -22,11 +22,6 @@ const PageTracker = () => {
   useEffect(() => {
     trackEngagementTime();
     trackPerformance();
-    
-    // Make test function globally available
-    if (typeof window !== 'undefined') {
-      (window as any).analyticsTest = testAnalytics;
-    }
   }, []);
 
   return null;

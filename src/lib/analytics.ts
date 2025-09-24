@@ -29,15 +29,9 @@ export function gaEvent(
   name: string,
   params: Record<string, string | number | boolean | null> = {},
 ): void {
-  // Always log for debugging
-  console.log("[GA EVENT]", name, params);
-
   // Send to GA4 if gtag is available
   if (typeof window !== "undefined" && window.gtag) {
     window.gtag("event", name, params);
-    console.log("[GA SENT]", name, "✅");
-  } else {
-    console.warn("[GA ERROR] gtag not available");
   }
 }
 
@@ -212,33 +206,3 @@ export function trackPageView(path: string, title?: string): void {
   });
 }
 
-/**
- * Test analytics setup - call this manually to verify tracking
- */
-export function testAnalytics(): void {
-  console.log('🧪 Testing Google Analytics setup...');
-  
-  // Test 1: Check if gtag is loaded
-  if (typeof window !== 'undefined' && window.gtag) {
-    console.log('✅ gtag is loaded');
-  } else {
-    console.error('❌ gtag is not loaded');
-    return;
-  }
-  
-  // Test 2: Send test event
-  gaEvent('test_analytics', {
-    test_parameter: 'test_value',
-    timestamp: Date.now(),
-  });
-  
-  // Test 3: Check dataLayer
-  if (window.dataLayer && window.dataLayer.length > 0) {
-    console.log('✅ dataLayer has data:', window.dataLayer.length, 'items');
-    console.log('📊 Latest dataLayer entries:', window.dataLayer.slice(-3));
-  } else {
-    console.warn('⚠️ dataLayer is empty or not found');
-  }
-  
-  console.log('🧪 Test complete. Check Network tab for requests to google-analytics.com');
-}

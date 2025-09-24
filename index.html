@@ -32,34 +32,14 @@
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
 
-      // Debug: Log current domain and location
-      console.log('Current domain:', window.location.hostname);
-      console.log('Current origin:', window.location.origin);
-      console.log('Current href:', window.location.href);
-      
       gtag('config', 'G-TJ4QFGLZJ6', {
-        'cookie_domain': window.location.hostname, // Explicitly set to wogosoft.github.io
+        'cookie_domain': 'auto',
         'cookie_flags': 'SameSite=None;Secure',
         'send_page_view': false,
         'anonymize_ip': true,
         'allow_google_signals': true,
-        'allow_ad_personalization_signals': true,
-        'debug_mode': true
+        'allow_ad_personalization_signals': true
       });
-      
-      // Debug: Confirm gtag is loaded
-      console.log('Google Analytics initialized for:', 'G-TJ4QFGLZJ6');
-      
-      // Make test function globally available
-      window.testGA = function() {
-        if (window.analyticsTest) {
-          window.analyticsTest();
-        } else {
-          console.log('⏳ Analytics test function not loaded yet. Try again in a moment.');
-        }
-      };
-      
-      console.log('💡 TIP: Type testGA() in console to test analytics');
     </script>
 
     <meta property="og:title" content="0c5c74f6-8c69-4d1e-adeb-788cbb665a93" />
