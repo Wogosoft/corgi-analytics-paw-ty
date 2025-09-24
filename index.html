@@ -49,6 +49,17 @@
       
       // Debug: Confirm gtag is loaded
       console.log('Google Analytics initialized for:', 'G-TJ4QFGLZJ6');
+      
+      // Make test function globally available
+      window.testGA = function() {
+        if (window.analyticsTest) {
+          window.analyticsTest();
+        } else {
+          console.log('⏳ Analytics test function not loaded yet. Try again in a moment.');
+        }
+      };
+      
+      console.log('💡 TIP: Type testGA() in console to test analytics');
     </script>
 
     <meta property="og:title" content="0c5c74f6-8c69-4d1e-adeb-788cbb665a93" />
