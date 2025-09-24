@@ -42,13 +42,22 @@
         'allow_ad_personalization_signals': true
       });
 
-      // Debug: Test if GA is working
+      // Enhanced debugging
+      console.log('🔍 GA4 Debug Info:');
+      console.log('- Domain:', window.location.hostname);
+      console.log('- Origin:', window.location.origin);
+      console.log('- gtag available:', typeof gtag);
+      console.log('- dataLayer:', window.dataLayer);
+      
+      // Test gtag immediately
       setTimeout(() => {
-        gtag('event', 'test_event', {
-          'custom_parameter': 'testing_ga4',
-          'debug': true
+        console.log('📡 Sending test event...');
+        gtag('event', 'debug_test', {
+          'test_parameter': 'debug_value',
+          'timestamp': Date.now()
         });
-        console.log('✅ GA4 test event sent');
+        console.log('✅ gtag function called');
+        console.log('📊 dataLayer after event:', window.dataLayer);
       }, 2000);
     </script>
 
