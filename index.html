@@ -32,19 +32,24 @@
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
 
-      // Ensure we're on the correct domain before setting cookies
-      const isGitHubPages = window.location.hostname === 'wogosoft.github.io';
-      
       gtag('config', 'G-TJ4QFGLZJ6', {
-        'cookie_domain': isGitHubPages ? 'wogosoft.github.io' : 'none',
+        'cookie_domain': '.github.io',
         'cookie_path': '/',
         'cookie_flags': 'SameSite=None;Secure',
-        'send_page_view': false,
+        'send_page_view': true,
         'anonymize_ip': true,
         'allow_google_signals': true,
-        'allow_ad_personalization_signals': true,
-        'storage': isGitHubPages ? 'cookies' : 'none'
+        'allow_ad_personalization_signals': true
       });
+
+      // Debug: Test if GA is working
+      setTimeout(() => {
+        gtag('event', 'test_event', {
+          'custom_parameter': 'testing_ga4',
+          'debug': true
+        });
+        console.log('✅ GA4 test event sent');
+      }, 2000);
     </script>
 
     <meta property="og:title" content="Corgis: Short Legs, Big Hearts" />

@@ -6,17 +6,12 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
-import { trackPageView, trackEngagementTime, trackPerformance } from "./lib/analytics";
+import { trackEngagementTime, trackPerformance } from "./lib/analytics";
 
 const queryClient = new QueryClient();
 
-// Component to track page views and analytics
+// Component to track analytics (page views handled by GA4 automatically)
 const PageTracker = () => {
-  const location = useLocation();
-
-  useEffect(() => {
-    trackPageView(location.pathname + location.search, document.title);
-  }, [location]);
 
   // Initialize tracking once when component mounts
   useEffect(() => {
