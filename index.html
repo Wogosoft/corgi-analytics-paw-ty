@@ -32,13 +32,18 @@
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
 
+      // Ensure we're on the correct domain before setting cookies
+      const isGitHubPages = window.location.hostname === 'wogosoft.github.io';
+      
       gtag('config', 'G-TJ4QFGLZJ6', {
-        'cookie_domain': 'auto',
+        'cookie_domain': isGitHubPages ? 'wogosoft.github.io' : 'none',
+        'cookie_path': '/',
         'cookie_flags': 'SameSite=None;Secure',
         'send_page_view': false,
         'anonymize_ip': true,
         'allow_google_signals': true,
-        'allow_ad_personalization_signals': true
+        'allow_ad_personalization_signals': true,
+        'storage': isGitHubPages ? 'cookies' : 'none'
       });
     </script>
 
