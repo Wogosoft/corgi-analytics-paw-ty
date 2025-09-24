@@ -2,15 +2,8 @@
 // Tracks user interactions with custom corgi-themed events
 // GA4 Measurement ID: G-TJ4QFGLZJ6
 
-type GtagArgs = [
-  type: string,
-  eventName: string,
-  params?: Record<string, string | number | boolean | null>,
-];
-
 declare global {
   interface Window {
-    gtag: (...args: GtagArgs) => void;
     dataLayer: Array<Record<string, unknown>>;
   }
 }
@@ -29,9 +22,13 @@ export function gaEvent(
   name: string,
   params: Record<string, string | number | boolean | null> = {},
 ): void {
-  // Send to GA4 if gtag is available
-  if (typeof window !== "undefined" && window.gtag) {
-    window.gtag("event", name, params);
+  // Send to GTM dataLayer
+  if (typeof window !== "undefined" && window.dataLayer) {
+    window.dataLayer.push({
+      event: name,
+      ...params,
+    });
+    console.log('[GTM EVENT]', name, params);
   }
 }
 

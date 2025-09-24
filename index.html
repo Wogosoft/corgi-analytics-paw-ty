@@ -25,39 +25,30 @@
       }(window.location))
     </script>
 
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TJ4QFGLZJ6"></script>
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-WRMZK389');</script>
+    <!-- End Google Tag Manager -->
+    
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-TJ4QFGLZJ6', {
-        'cookie_domain': '.github.io',
-        'cookie_path': '/',
-        'cookie_flags': 'SameSite=None;Secure',
-        'send_page_view': true,
-        'anonymize_ip': false,
-        'allow_google_signals': true,
-        'allow_ad_personalization_signals': true
-      });
-
-      // Enhanced debugging
-      console.log('🔍 GA4 Debug Info:');
+      // Debug: Confirm GTM is loading
+      console.log('🔍 GTM Debug Info:');
       console.log('- Domain:', window.location.hostname);
-      console.log('- Origin:', window.location.origin);
-      console.log('- gtag available:', typeof gtag);
-      console.log('- dataLayer:', window.dataLayer);
+      console.log('- dataLayer initialized:', !!window.dataLayer);
       
-      // Test gtag immediately
+      // Test event after GTM loads
       setTimeout(() => {
-        console.log('📡 Sending test event...');
-        gtag('event', 'debug_test', {
-          'test_parameter': 'debug_value',
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+          'event': 'debug_test',
+          'test_parameter': 'gtm_debug',
           'timestamp': Date.now()
         });
-        console.log('✅ gtag function called');
-        console.log('📊 dataLayer after event:', window.dataLayer);
+        console.log('✅ Test event pushed to dataLayer');
+        console.log('📊 dataLayer contents:', window.dataLayer);
       }, 2000);
     </script>
 
@@ -81,6 +72,11 @@
   </head>
 
   <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WRMZK389"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
