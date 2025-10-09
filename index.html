@@ -10,6 +10,9 @@
     />
     <meta name="author" content="Corgi Lovers United" />
 
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/corgi-analytics-paw-ty/favicon.ico" />
+
     <!-- GitHub Pages SPA support -->
     <script type="text/javascript">
       // Single Page Apps for GitHub Pages
@@ -32,6 +35,19 @@
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer','GTM-WRMZK389');</script>
     <!-- End Google Tag Manager -->
+
+    <!-- Gladly Chat Widget - Load Script -->
+    <script>
+      !function(c,n,r,t){if(!c[r]){var i,d,p=[];d="PROD"!==t&&t?"STAGING"===t?"https://cdn.gladly.qa/gladly/chat-sdk/widget.js":t:"https://cdn.gladly.com/chat-sdk/widget.js",c[r]={init:function(){i=arguments;var e={then:function(t){return p.push({type:"t",next:t}),e},catch:function(t){return p.push({type:"c",next:t}),e}};return e}},c.__onHelpAppHostReady__=function(t){if(delete c.__onHelpAppHostReady__,(c[r]=t).loaderCdn=d,i)for(var e=t.init.apply(t,i),n=0;n<p.length;n++){var a=p[n];e="t"===a.type?e.then(a.next):e.catch(a.next)}},function(){try{var t=n.getElementsByTagName("script")[0],e=n.createElement("script");e.async=!0,e.src=d+"?q="+(new Date).getTime(),t.parentNode.insertBefore(e,t)}catch(t){}}()}}
+      (window,document,'Gladly','STAGING')
+    </script>
+
+    <!-- Gladly Chat Widget - Initialize Config -->
+    <script>
+      window.gladlyConfig = {
+        appId: 'hellsoft.co-my-chat'
+      };
+    </script>
     
     <script>
       // Debug: Confirm GTM is loading
