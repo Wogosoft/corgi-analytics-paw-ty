@@ -27,7 +27,7 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <BrowserRouter basename={import.meta.env.PROD ? "/corgi-analytics-paw-ty" : ""}>
+      <BrowserRouter basename="/">
         <PageTracker />
         <Routes>
           <Route path="/" element={<Index />} />
