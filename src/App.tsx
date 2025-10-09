@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import { trackEngagementTime, trackPerformance } from "./lib/analytics";
+import { ConsentBanner } from "./components/ConsentBanner";
 
 const queryClient = new QueryClient();
 
@@ -27,6 +28,7 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
+      <ConsentBanner />
       <BrowserRouter basename="/">
         <PageTracker />
         <Routes>

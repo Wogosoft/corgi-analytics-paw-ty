@@ -13,6 +13,52 @@
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
 
+    <!-- Google Consent Mode v2 - Load BEFORE GTM -->
+    <script>
+      // Initialize consent mode with default denied state
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      
+      // Set default consent state (before GTM loads)
+      gtag('consent', 'default', {
+        'ad_storage': 'denied',
+        'ad_user_data': 'denied',
+        'ad_personalization': 'denied',
+        'analytics_storage': 'denied',
+        'functionality_storage': 'granted', // Allow functionality cookies
+        'personalization_storage': 'denied',
+        'security_storage': 'granted', // Allow security cookies
+        'wait_for_update': 500 // Wait 500ms for consent banner to load
+      });
+
+      // Check for existing consent
+      const consentChoice = localStorage.getItem('corgi_consent_choice');
+      const consentTimestamp = localStorage.getItem('corgi_consent_timestamp');
+      const CONSENT_EXPIRY = 365 * 24 * 60 * 60 * 1000; // 365 days in milliseconds
+
+      // If user has previously given consent and it hasn't expired
+      if (consentChoice && consentTimestamp) {
+        const isExpired = Date.now() - parseInt(consentTimestamp) > CONSENT_EXPIRY;
+        if (!isExpired) {
+          const consent = JSON.parse(consentChoice);
+          gtag('consent', 'update', consent);
+          console.log('✅ Restored consent choice:', consent);
+        } else {
+          // Clear expired consent
+          localStorage.removeItem('corgi_consent_choice');
+          localStorage.removeItem('corgi_consent_timestamp');
+        }
+      }
+
+      // Helper function to update consent (will be called by banner)
+      window.updateConsent = function(consentSettings) {
+        gtag('consent', 'update', consentSettings);
+        localStorage.setItem('corgi_consent_choice', JSON.stringify(consentSettings));
+        localStorage.setItem('corgi_consent_timestamp', Date.now().toString());
+        console.log('🔒 Consent updated:', consentSettings);
+      };
+    </script>
+
     <!-- GitHub Pages SPA support -->
     <script type="text/javascript">
       // Single Page Apps for GitHub Pages
@@ -74,10 +120,10 @@
     <meta property="og:title" content="Corgis: Short Legs, Big Hearts" />
     <meta property="og:description" content="Discover the wonderful world of corgis - from their adorable butts to their royal heritage. Interactive guide to corgi ownership!" />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://wogosoft.github.io/corgi-analytics-paw-ty/" />
+    <meta property="og:url" content="https://corgis.hellsoft.co/" />
     <meta
       property="og:image"
-      content="https://wogosoft.github.io/corgi-analytics-paw-ty/assets/corgi-hero.jpg"
+      content="https://corgis.hellsoft.co/assets/corgi-hero.jpg"
     />
 
     <meta name="twitter:card" content="summary_large_image" />
@@ -86,7 +132,7 @@
     <meta name="twitter:description" content="Discover the wonderful world of corgis - from their adorable butts to their royal heritage. Interactive guide to corgi ownership!" />
     <meta
       name="twitter:image"
-      content="https://wogosoft.github.io/corgi-analytics-paw-ty/assets/corgi-hero.jpg"
+      content="https://corgis.hellsoft.co/assets/corgi-hero.jpg"
     />
   </head>
 

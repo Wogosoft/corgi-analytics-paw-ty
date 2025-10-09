@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
-import { gaEvent } from "@/lib/analytics";
-import { ArrowUp, Heart, Github, Twitter, Mail } from "lucide-react";
+import { gaEvent, resetConsent } from "@/lib/analytics";
+import { ArrowUp, Heart, Github, Twitter, Mail, Shield } from "lucide-react";
 
 export function Footer() {
   const handleBackToTop = () => {
@@ -138,12 +138,25 @@ export function Footer() {
                 <span>for corgi lovers everywhere</span>
               </div>
 
-              <button
-                onClick={() => handleNavClick("credits")}
-                className="text-muted-foreground hover:text-primary transition-colors text-sm"
-              >
-                Credits & Acknowledgments
-              </button>
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={() => {
+                    handleNavClick("cookie_settings");
+                    resetConsent();
+                  }}
+                  className="text-muted-foreground hover:text-primary transition-colors text-sm flex items-center gap-1"
+                  title="Manage cookie preferences"
+                >
+                  <Shield className="w-3 h-3" />
+                  Cookie Settings
+                </button>
+                <button
+                  onClick={() => handleNavClick("credits")}
+                  className="text-muted-foreground hover:text-primary transition-colors text-sm"
+                >
+                  Credits
+                </button>
+              </div>
             </div>
 
             <div className="text-sm text-muted-foreground">
@@ -152,9 +165,7 @@ export function Footer() {
                 awesomeness.
               </p>
               <p className="mt-1">
-                Replace{" "}
-                <code className="bg-muted px-1 rounded text-xs">G-XXXXXXX</code>{" "}
-                in the head with your actual GA4 tracking ID.
+                Built with Google Tag Manager (GTM-WRMZK389) & GA4 (G-TJ4QFGLZJ6)
               </p>
             </div>
           </div>

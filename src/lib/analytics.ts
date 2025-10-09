@@ -138,7 +138,7 @@ export function isDebugMode(): boolean {
  * Track user engagement time
  */
 export function trackEngagementTime(): void {
-  let startTime = Date.now();
+  const startTime = Date.now();
   let lastActiveTime = startTime;
   
   const trackEngagement = () => {
@@ -179,9 +179,9 @@ export function trackPerformance(): void {
         
         if (perfData) {
           gaEvent('page_performance', {
-            load_time: Math.round(perfData.loadEventEnd - perfData.navigationStart),
-            dom_content_loaded: Math.round(perfData.domContentLoadedEventEnd - perfData.navigationStart),
-            first_paint: Math.round(perfData.responseEnd - perfData.navigationStart),
+            load_time: Math.round(perfData.loadEventEnd - perfData.fetchStart),
+            dom_content_loaded: Math.round(perfData.domContentLoadedEventEnd - perfData.fetchStart),
+            first_paint: Math.round(perfData.responseEnd - perfData.fetchStart),
           });
         }
       }, 1000);
@@ -202,4 +202,77 @@ export function trackPageView(path: string, title?: string): void {
     timestamp: Date.now(),
   });
 }
+
+/**
+ * Consent Mode Helper Functions
+ */
+
+export interface ConsentSettings {
+  ad_storage: 'granted' | 'denied';
+  ad_user_data: 'granted' | 'denied';
+  ad_personalization: 'granted' | 'denied';
+  analytics_storage: 'granted' | 'denied';
+  personalization_storage: 'granted' | 'denied';
+}
+
+/**
+ * Get current consent status from localStorage
+ */
+export function getConsentStatus(): ConsentSettings | null {
+  const consentChoice = localStorage.getItem('corgi_consent_choice');
+  if (consentChoice) {
+    try {
+      return JSON.parse(consentChoice) as ConsentSettings;
+    } catch {
+      return null;
+    }
+  }
+  return null;
+}
+
+/**
+ * Check if user has made a consent choice
+ */
+export function hasConsented(): boolean {
+  return localStorage.getItem('corgi_consent_choice') !== null;
+}
+
+/**
+ * Update consent settings
+ */
+export function updateConsentSettings(settings: ConsentSettings): void {
+  if (typeof window !== 'undefined' && (window as Window & { updateConsent?: (settings: ConsentSettings) => void }).updateConsent) {
+    (window as Window & { updateConsent: (settings: ConsentSettings) => void }).updateConsent(settings);
+  }
+}
+
+/**
+ * Show consent banner (by clearing stored consent)
+ */
+export function resetConsent(): void {
+  localStorage.removeItem('corgi_consent_choice');
+  localStorage.removeItem('corgi_consent_timestamp');
+  // Reload to show banner
+  window.location.reload();
+}
+
+/**
+ * Get consent choice timestamp
+ */
+export function getConsentTimestamp(): number | null {
+  const timestamp = localStorage.getItem('corgi_consent_timestamp');
+  return timestamp ? parseInt(timestamp) : null;
+}
+
+/**
+ * Check if consent has expired (default: 365 days)
+ */
+export function isConsentExpired(expiryDays = 365): boolean {
+  const timestamp = getConsentTimestamp();
+  if (!timestamp) return true;
+  
+  const expiryMs = expiryDays * 24 * 60 * 60 * 1000;
+  return Date.now() - timestamp > expiryMs;
+}
+
 
