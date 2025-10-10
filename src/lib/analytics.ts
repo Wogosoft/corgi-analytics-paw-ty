@@ -1,10 +1,12 @@
 // Google Analytics helper for corgi website
 // Tracks user interactions through Google Tag Manager
 // GTM Container ID: GTM-WRMZK389
+// GA4 Measurement ID: G-TJ4QFGLZJ6
 
 declare global {
   interface Window {
-    dataLayer: Array<Record<string, unknown>>;
+    dataLayer: Array<unknown>;
+    gtag?: (...args: unknown[]) => void;
   }
 }
 
@@ -14,7 +16,8 @@ export interface GAEvent {
 }
 
 /**
- * Send an event to Google Tag Manager dataLayer
+ * Send an event to Google Analytics via GTM
+ * Events are sent both to dataLayer (for GTM triggers) and via gtag (for GA4)
  * @param name Event name (should be snake_case)
  * @param params Event parameters (should be camelCase)
  */
@@ -24,17 +27,25 @@ export function gaEvent(
 ): void {
   if (typeof window === "undefined") return;
 
-  // Send to GTM dataLayer
+  // Send to GTM dataLayer for custom GTM triggers
   if (window.dataLayer) {
     window.dataLayer.push({
       event: name,
       ...params,
     });
-    
-    // Log event for verification
-    console.log('📊 [GTM Event]', name, params);
+  }
+
+  // Also send directly to GA4 via gtag (provided by GTM)
+  // This ensures events reach GA4 even without custom GTM configuration
+  if (window.gtag) {
+    window.gtag('event', name, params);
+    console.log('📊 [GA4 Event via GTM]', name, params);
+  } else if (window.dataLayer) {
+    // Fallback: send via dataLayer in gtag format
+    window.dataLayer.push(['event', name, params]);
+    console.log('📊 [GA4 Event via dataLayer]', name, params);
   } else {
-    console.warn('⚠️  dataLayer not available for event:', name);
+    console.warn('⚠️  Neither gtag nor dataLayer available for event:', name);
   }
 }
 
