@@ -7,6 +7,7 @@ declare global {
   interface Window {
     dataLayer: Array<unknown>;
     gtag?: (...args: unknown[]) => void;
+    __analytics_mode?: 'ga4_only' | 'gtm';
   }
 }
 
@@ -16,8 +17,18 @@ export interface GAEvent {
 }
 
 /**
- * Send an event to Google Analytics via GTM
- * Events are sent both to dataLayer (for GTM triggers) and via gtag (for GA4)
+ * Check if GA4-only mode is enabled via URL parameter
+ * Add ?ga4_only=1 to URL to bypass GTM and send events only to GA4
+ */
+function isGA4OnlyMode(): boolean {
+  if (typeof window === "undefined") return false;
+  return window.__analytics_mode === 'ga4_only';
+}
+
+/**
+ * Send an event to Google Analytics via GTM or GA4 direct
+ * - In normal mode: sends to both GTM dataLayer and GA4
+ * - In GA4-only mode (?ga4_only=1): sends only to GA4 directly
  * @param name Event name (should be snake_case)
  * @param params Event parameters (should be camelCase)
  */
@@ -27,6 +38,21 @@ export function gaEvent(
 ): void {
   if (typeof window === "undefined") return;
 
+  const ga4Only = isGA4OnlyMode();
+
+  // If GA4-only mode, skip GTM dataLayer and only use gtag
+  if (ga4Only) {
+    // Send directly to GA4 via gtag only
+    if (window.gtag) {
+      window.gtag('event', name, params);
+      console.log('🎯 [GA4 Direct]', name, params);
+    } else {
+      console.warn('⚠️  gtag not available for GA4-only event:', name);
+    }
+    return;
+  }
+
+  // Normal GTM mode: send to both dataLayer and gtag
   // Send to GTM dataLayer for custom GTM triggers
   if (window.dataLayer) {
     window.dataLayer.push({

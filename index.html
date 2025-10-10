@@ -74,40 +74,93 @@
       }(window.location))
     </script>
 
-    <!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-WRMZK389');</script>
+    <!-- Analytics Loading Logic: GTM or GA4 Direct -->
+    <script>
+      // Check if GA4-only mode is enabled via URL parameter
+      const urlParams = new URLSearchParams(window.location.search);
+      const isGA4Only = urlParams.get('ga4_only') === '1';
+      
+      // Store the mode for later use
+      window.__analytics_mode = isGA4Only ? 'ga4_only' : 'gtm';
+      
+      if (isGA4Only) {
+        console.log('🎯 GA4-ONLY MODE: Skipping GTM, loading GA4 directly');
+        console.log('  - GA4 Measurement ID: G-TJ4QFGLZJ6');
+        console.log('  - Remove ?ga4_only=1 to use GTM');
+      } else {
+        console.log('🔍 GTM MODE: Loading Google Tag Manager');
+        console.log('  - GTM Container ID: GTM-WRMZK389');
+        console.log('  - GA4 Measurement ID: G-TJ4QFGLZJ6 (via GTM)');
+        console.log('  - Add ?ga4_only=1 to test GA4 directly');
+      }
+    </script>
+
+    <!-- Google Tag Manager (only if NOT in GA4-only mode) -->
+    <script>
+      if (window.__analytics_mode !== 'ga4_only') {
+        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-WRMZK389');
+        console.log('✅ GTM script loaded');
+      }
+    </script>
     <!-- End Google Tag Manager -->
 
-    <!-- GTM & GA4 Verification Script -->
+    <!-- Google Analytics 4 Direct (only if in GA4-only mode) -->
     <script>
-      // Initialize gtag for GA4 (GTM provides this)
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      
-      // Log GTM initialization
-      console.log('🔍 GTM Configuration:');
-      console.log('  - GTM Container ID: GTM-WRMZK389');
-      console.log('  - GA4 Measurement ID: G-TJ4QFGLZJ6 (configured in GTM)');
-      console.log('  - Domain:', window.location.hostname);
-      console.log('  - dataLayer initialized:', !!window.dataLayer);
-      
-      // Send test event after GTM loads to verify it's working
-      setTimeout(() => {
-        if (window.dataLayer) {
-          // Send via dataLayer for GTM
-          window.dataLayer.push({
-            'event': 'gtm_verification_test',
+      if (window.__analytics_mode === 'ga4_only') {
+        // Load GA4 directly
+        var script = document.createElement('script');
+        script.async = true;
+        script.src = 'https://www.googletagmanager.com/gtag/js?id=G-TJ4QFGLZJ6';
+        document.head.appendChild(script);
+        
+        // Initialize GA4
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        window.gtag = gtag;
+        gtag('js', new Date());
+        gtag('config', 'G-TJ4QFGLZJ6', {
+          'send_page_view': true
+        });
+        
+        console.log('✅ GA4 direct script loaded');
+        
+        // Send test event
+        setTimeout(() => {
+          gtag('event', 'ga4_direct_verification_test', {
             'test_type': 'initialization',
             'timestamp': Date.now()
           });
-          console.log('✅ GTM verification test event sent to dataLayer');
-          console.log('📊 Current dataLayer length:', window.dataLayer.length);
-        }
-      }, 1000);
+          console.log('✅ GA4 direct verification test event sent');
+        }, 1000);
+      }
+    </script>
+
+    <!-- GTM Verification (only if NOT in GA4-only mode) -->
+    <script>
+      if (window.__analytics_mode !== 'ga4_only') {
+        // Initialize gtag for GA4 (GTM provides this)
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        window.gtag = gtag;
+        
+        // Send test event after GTM loads to verify it's working
+        setTimeout(() => {
+          if (window.dataLayer) {
+            // Send via dataLayer for GTM
+            window.dataLayer.push({
+              'event': 'gtm_verification_test',
+              'test_type': 'initialization',
+              'timestamp': Date.now()
+            });
+            console.log('✅ GTM verification test event sent to dataLayer');
+            console.log('📊 Current dataLayer length:', window.dataLayer.length);
+          }
+        }, 1000);
+      }
     </script>
 
     <!-- Gladly Chat Widget - Load Script -->
@@ -144,9 +197,12 @@
   </head>
 
   <body>
-    <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WRMZK389"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- Google Tag Manager (noscript) - only if NOT in GA4-only mode -->
+    <script>
+      if (window.__analytics_mode !== 'ga4_only') {
+        document.write('<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WRMZK389" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>');
+      }
+    </script>
     <!-- End Google Tag Manager (noscript) -->
     
     <div id="root"></div>
