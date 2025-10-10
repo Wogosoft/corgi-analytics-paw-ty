@@ -1,11 +1,10 @@
-// Google Analytics 4 helper for corgi website
-// Tracks user interactions with custom corgi-themed events
-// GA4 Measurement ID: G-TJ4QFGLZJ6
+// Google Analytics helper for corgi website
+// Tracks user interactions through Google Tag Manager
+// GTM Container ID: GTM-WRMZK389
 
 declare global {
   interface Window {
     dataLayer: Array<Record<string, unknown>>;
-    gtag?: (...args: unknown[]) => void;
   }
 }
 
@@ -15,9 +14,8 @@ export interface GAEvent {
 }
 
 /**
- * Send a Google Analytics 4 event with corgi-themed naming
- * Sends to both GA4 (for debug) and GTM (for your config)
- * @param name Event name (should be snake_case, prefixed with corgi_)
+ * Send an event to Google Tag Manager dataLayer
+ * @param name Event name (should be snake_case)
  * @param params Event parameters (should be camelCase)
  */
 export function gaEvent(
@@ -26,20 +24,18 @@ export function gaEvent(
 ): void {
   if (typeof window === "undefined") return;
 
-  // Send to GA4 directly (for debug mode)
-  if (window.gtag) {
-    window.gtag('event', name, params);
-  }
-
-  // Also send to GTM dataLayer (for your GTM config)
+  // Send to GTM dataLayer
   if (window.dataLayer) {
     window.dataLayer.push({
       event: name,
       ...params,
     });
+    
+    // Log event for verification
+    console.log('📊 [GTM Event]', name, params);
+  } else {
+    console.warn('⚠️  dataLayer not available for event:', name);
   }
-  
-  console.log('[Analytics] Event:', name, params);
 }
 
 /**
@@ -135,13 +131,6 @@ export function initScrollTracking(): () => void {
   return () => {
     window.removeEventListener("scroll", debouncedTrackScroll);
   };
-}
-
-/**
- * Check if debug mode is enabled
- */
-export function isDebugMode(): boolean {
-  return new URLSearchParams(window.location.search).get("debug") === "1";
 }
 
 /**

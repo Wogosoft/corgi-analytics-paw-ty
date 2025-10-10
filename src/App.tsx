@@ -16,8 +16,10 @@ const PageTracker = () => {
 
   // Initialize tracking once when component mounts
   useEffect(() => {
+    console.log('🚀 Initializing analytics tracking...');
     trackEngagementTime();
     trackPerformance();
+    console.log('✅ Analytics tracking initialized');
   }, []);
 
   return null;

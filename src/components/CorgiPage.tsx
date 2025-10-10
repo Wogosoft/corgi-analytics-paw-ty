@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { gaEvent, initScrollTracking, debounce } from "@/lib/analytics";
-import { DebugPanel } from "./DebugPanel";
 import { HeroSection } from "./HeroSection";
 import { WhyHaveCorgi } from "./WhyHaveCorgi";
 import { WhyNotHaveCorgi } from "./WhyNotHaveCorgi";
@@ -158,9 +157,6 @@ export function CorgiPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Debug Panel */}
-      <DebugPanel />
-
       {/* Idle nudge */}
       {showIdleNudge && (
         <div className="fixed bottom-4 right-4 z-40 animate-wiggle">

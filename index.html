@@ -43,13 +43,6 @@
           const consent = JSON.parse(consentChoice);
           gtag('consent', 'update', consent);
           console.log('✅ Restored consent choice:', consent);
-          
-          // Initialize GA4 with existing consent
-          setTimeout(function() {
-            if (window.initGA4) {
-              window.initGA4();
-            }
-          }, 100);
         } else {
           // Clear expired consent
           localStorage.removeItem('corgi_consent_choice');
@@ -63,11 +56,6 @@
         localStorage.setItem('corgi_consent_choice', JSON.stringify(consentSettings));
         localStorage.setItem('corgi_consent_timestamp', Date.now().toString());
         console.log('🔒 Consent updated:', consentSettings);
-        
-        // Initialize GA4 after consent
-        if (window.initGA4) {
-          window.initGA4();
-        }
       };
     </script>
 
@@ -94,6 +82,38 @@
     })(window,document,'script','dataLayer','GTM-WRMZK389');</script>
     <!-- End Google Tag Manager -->
 
+    <!-- GTM & GA4 Verification Script -->
+    <script>
+      // Log GTM initialization
+      console.log('🔍 GTM Configuration:');
+      console.log('  - GTM Container ID: GTM-WRMZK389');
+      console.log('  - GA4 Measurement ID: G-TJ4QFGLZJ6 (configured in GTM)');
+      console.log('  - Domain:', window.location.hostname);
+      console.log('  - dataLayer initialized:', !!window.dataLayer);
+      
+      // Send test event after GTM loads to verify dataLayer is working
+      setTimeout(() => {
+        if (window.dataLayer) {
+          window.dataLayer.push({
+            'event': 'gtm_verification_test',
+            'test_type': 'initialization',
+            'timestamp': Date.now()
+          });
+          console.log('✅ GTM verification test event sent');
+          console.log('📊 Current dataLayer length:', window.dataLayer.length);
+          console.log('⚠️  Make sure GA4 tag (G-TJ4QFGLZJ6) is configured in GTM container');
+        }
+      }, 1000);
+      
+      // Listen for GTM container loaded event
+      if (window.dataLayer) {
+        window.dataLayer.push({
+          'event': 'gtm.load',
+          'gtm.uniqueEventId': Date.now()
+        });
+      }
+    </script>
+
     <!-- Gladly Chat Widget - Load Script -->
     <script>
       !function(c,n,r,t){if(!c[r]){var i,d,p=[];d="PROD"!==t&&t?"STAGING"===t?"https://cdn.gladly.qa/gladly/chat-sdk/widget.js":t:"https://cdn.gladly.com/chat-sdk/widget.js",c[r]={init:function(){i=arguments;var e={then:function(t){return p.push({type:"t",next:t}),e},catch:function(t){return p.push({type:"c",next:t}),e}};return e}},c.__onHelpAppHostReady__=function(t){if(delete c.__onHelpAppHostReady__,(c[r]=t).loaderCdn=d,i)for(var e=t.init.apply(t,i),n=0;n<p.length;n++){var a=p[n];e="t"===a.type?e.then(a.next):e.catch(a.next)}},function(){try{var t=n.getElementsByTagName("script")[0],e=n.createElement("script");e.async=!0,e.src=d+"?q="+(new Date).getTime(),t.parentNode.insertBefore(e,t)}catch(t){}}()}}
@@ -107,47 +127,6 @@
       };
     </script>
 
-    <!-- GA4 Direct (for Debug Mode) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TJ4QFGLZJ6"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      
-      // Wait for consent before initializing
-      window.initGA4 = function() {
-        if (!window.ga4Initialized) {
-          gtag('js', new Date());
-          gtag('config', 'G-TJ4QFGLZJ6', {
-            'send_page_view': true,
-            'debug_mode': true  // Always on for debugging
-          });
-          window.ga4Initialized = true;
-          console.log('✅ GA4 Debug Mode initialized');
-        }
-      };
-    </script>
-    
-    <script>
-      // Debug: Confirm GTM is loading
-      console.log('🔍 GTM Configuration Check:');
-      console.log('- GTM Container ID: GTM-WRMZK389');
-      console.log('- GA4 Measurement ID: G-TJ4QFGLZJ6');
-      console.log('- Domain:', window.location.hostname);
-      console.log('- dataLayer initialized:', !!window.dataLayer);
-      
-      // Test event after GTM loads
-      setTimeout(() => {
-        window.dataLayer = window.dataLayer || [];
-        window.dataLayer.push({
-          'event': 'debug_test',
-          'test_parameter': 'gtm_debug',
-          'timestamp': Date.now()
-        });
-        console.log('✅ Test event pushed to dataLayer');
-        console.log('📊 dataLayer contents:', window.dataLayer);
-        console.log('⚠️  Make sure GA4 tag (G-TJ4QFGLZJ6) is configured in GTM container (GTM-WRMZK389)');
-      }, 2000);
-    </script>
 
     <meta property="og:title" content="Corgis: Short Legs, Big Hearts" />
     <meta property="og:description" content="Discover the wonderful world of corgis - from their adorable butts to their royal heritage. Interactive guide to corgi ownership!" />
