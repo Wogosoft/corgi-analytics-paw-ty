@@ -5,6 +5,7 @@
 declare global {
   interface Window {
     dataLayer: Array<Record<string, unknown>>;
+    gtag?: (...args: unknown[]) => void;
   }
 }
 
@@ -14,7 +15,8 @@ export interface GAEvent {
 }
 
 /**
- * Send a Google Analytics 4 event with corgi-themed naming via GTM
+ * Send a Google Analytics 4 event with corgi-themed naming
+ * Sends to both GA4 (for debug) and GTM (for your config)
  * @param name Event name (should be snake_case, prefixed with corgi_)
  * @param params Event parameters (should be camelCase)
  */
@@ -24,16 +26,20 @@ export function gaEvent(
 ): void {
   if (typeof window === "undefined") return;
 
-  // Send to GTM dataLayer
+  // Send to GA4 directly (for debug mode)
+  if (window.gtag) {
+    window.gtag('event', name, params);
+  }
+
+  // Also send to GTM dataLayer (for your GTM config)
   if (window.dataLayer) {
     window.dataLayer.push({
       event: name,
       ...params,
     });
-    console.log('[GTM] Event:', name, params);
-  } else {
-    console.warn('[GTM] dataLayer not available for event:', name);
   }
+  
+  console.log('[Analytics] Event:', name, params);
 }
 
 /**

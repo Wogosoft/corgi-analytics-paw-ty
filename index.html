@@ -43,6 +43,13 @@
           const consent = JSON.parse(consentChoice);
           gtag('consent', 'update', consent);
           console.log('✅ Restored consent choice:', consent);
+          
+          // Initialize GA4 with existing consent
+          setTimeout(function() {
+            if (window.initGA4) {
+              window.initGA4();
+            }
+          }, 100);
         } else {
           // Clear expired consent
           localStorage.removeItem('corgi_consent_choice');
@@ -56,6 +63,11 @@
         localStorage.setItem('corgi_consent_choice', JSON.stringify(consentSettings));
         localStorage.setItem('corgi_consent_timestamp', Date.now().toString());
         console.log('🔒 Consent updated:', consentSettings);
+        
+        // Initialize GA4 after consent
+        if (window.initGA4) {
+          window.initGA4();
+        }
       };
     </script>
 
@@ -85,13 +97,33 @@
     <!-- Gladly Chat Widget - Load Script -->
     <script>
       !function(c,n,r,t){if(!c[r]){var i,d,p=[];d="PROD"!==t&&t?"STAGING"===t?"https://cdn.gladly.qa/gladly/chat-sdk/widget.js":t:"https://cdn.gladly.com/chat-sdk/widget.js",c[r]={init:function(){i=arguments;var e={then:function(t){return p.push({type:"t",next:t}),e},catch:function(t){return p.push({type:"c",next:t}),e}};return e}},c.__onHelpAppHostReady__=function(t){if(delete c.__onHelpAppHostReady__,(c[r]=t).loaderCdn=d,i)for(var e=t.init.apply(t,i),n=0;n<p.length;n++){var a=p[n];e="t"===a.type?e.then(a.next):e.catch(a.next)}},function(){try{var t=n.getElementsByTagName("script")[0],e=n.createElement("script");e.async=!0,e.src=d+"?q="+(new Date).getTime(),t.parentNode.insertBefore(e,t)}catch(t){}}()}}
-      (window,document,'Gladly','MASTER')
+      (window,document,'Gladly','https://cdn.gladly.qa/master/chat-sdk/widget.js')
     </script>
 
     <!-- Gladly Chat Widget - Initialize Config -->
     <script>
       window.gladlyConfig = {
         appId: 'hellsoft.co'
+      };
+    </script>
+
+    <!-- GA4 Direct (for Debug Mode) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TJ4QFGLZJ6"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      
+      // Wait for consent before initializing
+      window.initGA4 = function() {
+        if (!window.ga4Initialized) {
+          gtag('js', new Date());
+          gtag('config', 'G-TJ4QFGLZJ6', {
+            'send_page_view': true,
+            'debug_mode': true  // Always on for debugging
+          });
+          window.ga4Initialized = true;
+          console.log('✅ GA4 Debug Mode initialized');
+        }
       };
     </script>
     
