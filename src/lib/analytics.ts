@@ -14,7 +14,7 @@ export interface GAEvent {
 }
 
 /**
- * Send a Google Analytics 4 event with corgi-themed naming
+ * Send a Google Analytics 4 event with corgi-themed naming via GTM
  * @param name Event name (should be snake_case, prefixed with corgi_)
  * @param params Event parameters (should be camelCase)
  */
@@ -22,13 +22,17 @@ export function gaEvent(
   name: string,
   params: Record<string, string | number | boolean | null> = {},
 ): void {
+  if (typeof window === "undefined") return;
+
   // Send to GTM dataLayer
-  if (typeof window !== "undefined" && window.dataLayer) {
+  if (window.dataLayer) {
     window.dataLayer.push({
       event: name,
       ...params,
     });
-    console.log('[GTM EVENT]', name, params);
+    console.log('[GTM] Event:', name, params);
+  } else {
+    console.warn('[GTM] dataLayer not available for event:', name);
   }
 }
 
